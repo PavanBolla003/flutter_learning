@@ -3,10 +3,16 @@ import 'package:meals/models/meal.dart';
 import 'package:meals/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({super.key, required this.title, required this.meals});
+  const MealsScreen({
+    super.key,
+    required this.title,
+    required this.meals,
+    required this.onToggleFavourite,
+  });
 
   final String title;
   final List<Meal> meals;
+  final void Function(Meal meal) onToggleFavourite;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +39,10 @@ class MealsScreen extends StatelessWidget {
           )
         : ListView.builder(
             itemCount: meals.length,
-            itemBuilder: (context, index) => MealItem(meal: meals[index]),
+            itemBuilder: (context, index) => MealItem(
+              meal: meals[index],
+              onToggleFavourite: onToggleFavourite,
+            ),
           );
 
     return Scaffold(
