@@ -15,6 +15,11 @@ class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
   final List<Meal> _favouriteMeals = [];
 
+  bool _glutenFree = false;
+  bool _lactoseFree = false;
+  bool _vegetarian = false;
+  bool _vegan = false;
+
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
@@ -34,6 +39,30 @@ class _TabsScreenState extends State<TabsScreen> {
     }
   }
 
+  void _setGlutenFree(bool value) {
+    setState(() {
+      _glutenFree = value;
+    });
+  }
+
+  void _setLactoseFree(bool value) {
+    setState(() {
+      _lactoseFree = value;
+    });
+  }
+
+  void _setVegetarian(bool value) {
+    setState(() {
+      _vegetarian = value;
+    });
+  }
+
+  void _setVegan(bool value) {
+    setState(() {
+      _vegan = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget activePage = CategoryScreen(
@@ -42,7 +71,16 @@ class _TabsScreenState extends State<TabsScreen> {
     var activePageTitle = 'Meals';
 
     if (_selectedPageIndex == 1) {
-      activePage = const FiltersScreen();
+      activePage = FiltersScreen(
+        glutenFree: _glutenFree,
+        lactoseFree: _lactoseFree,
+        vegetarian: _vegetarian,
+        vegan: _vegan,
+        onGlutenFreeChanged: _setGlutenFree,
+        onLactoseFreeChanged: _setLactoseFree,
+        onVegetarianChanged: _setVegetarian,
+        onVeganChanged: _setVegan,
+      );
       activePageTitle = 'Filters';
     }
 
