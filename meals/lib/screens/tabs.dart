@@ -52,6 +52,15 @@ class _TabsScreenState extends State<TabsScreen> {
       drawer: Drawer(
         child: ListView(
           children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              child: const Text(
+                'Meals App',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
             ListTile(
               leading: const Icon(Icons.restaurant),
               title: const Text('Meals'),
