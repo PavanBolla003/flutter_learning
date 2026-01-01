@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals/screens/categories.dart';
 import 'package:meals/screens/meals.dart';
+import 'package:meals/screens/filters.dart';
 import 'package:meals/models/meal.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -38,30 +39,41 @@ class _TabsScreenState extends State<TabsScreen> {
     Widget activePage = CategoryScreen(
       onToggleFavourite: _toggleMealFavouriteStatus,
     );
-    var activePageTitle = 'Categories';
+    var activePageTitle = 'Meals';
 
     if (_selectedPageIndex == 1) {
-      activePage = MealsScreen(
-        meals: _favouriteMeals,
-        title: 'Your Favourites',
-        onToggleFavourite: _toggleMealFavouriteStatus,
-      );
-      activePageTitle = 'Your Favourites';
+      activePage = const FiltersScreen();
+      activePageTitle = 'Filters';
     }
 
     return Scaffold(
       appBar: AppBar(title: Text(activePageTitle)),
       body: activePage,
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectPage,
-        currentIndex: _selectedPageIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.set_meal),
-            label: 'Categories',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favourites'),
-        ],
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.restaurant),
+              title: const Text('Meals'),
+              onTap: () {
+                setState(() {
+                  _selectedPageIndex = 0;
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.filter_list),
+              title: const Text('Filters'),
+              onTap: () {
+                setState(() {
+                  _selectedPageIndex = 1;
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
