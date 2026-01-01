@@ -5,18 +5,38 @@ import 'package:meals/screens/meals.dart';
 import 'package:meals/models/meal.dart';
 
 class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({super.key, required this.onToggleFavourite});
+  const CategoryScreen({
+    super.key,
+    required this.onToggleFavourite,
+    required this.glutenFree,
+    required this.lactoseFree,
+    required this.vegetarian,
+    required this.vegan,
+  });
 
   final void Function(Meal meal) onToggleFavourite;
+  final bool glutenFree;
+  final bool lactoseFree;
+  final bool vegetarian;
+  final bool vegan;
 
   void _selectCategory(BuildContext context, String id, String title) {
+    final filteredMeals = dummyMeals
+        .where((meal) => meal.categories.contains(id))
+        .where((meal) {
+          if (glutenFree && !meal.isGlutenFree) return false;
+          if (lactoseFree && !meal.isLactoseFree) return false;
+          if (vegetarian && !meal.isVegetarian) return false;
+          if (vegan && !meal.isVegan) return false;
+          return true;
+        })
+        .toList();
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MealsScreen(
           title: title,
-          meals: dummyMeals
-              .where((meal) => meal.categories.contains(id))
-              .toList(),
+          meals: filteredMeals,
           onToggleFavourite: onToggleFavourite,
         ),
       ),

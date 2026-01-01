@@ -67,6 +67,10 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     Widget activePage = CategoryScreen(
       onToggleFavourite: _toggleMealFavouriteStatus,
+      glutenFree: _glutenFree,
+      lactoseFree: _lactoseFree,
+      vegetarian: _vegetarian,
+      vegan: _vegan,
     );
     var activePageTitle = 'Meals';
 
